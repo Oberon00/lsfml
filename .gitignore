@@ -1,0 +1,6 @@
+# Notepad++
+build/
+nppBackup/
+*kdev4*
+*.kate-swp
+
