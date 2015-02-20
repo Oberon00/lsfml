@@ -1,6 +1,9 @@
+#ifndef LSFML_OPEN_UTIL_HPP_INCLUDED
+#define LSFML_OPEN_UTIL_HPP_INCLUDED
+
 #include <boost/config.hpp>
 #include <apollo/error.hpp>
-#include <apollo/builtin_types.hpp>
+#include <apollo/to_raw_function.hpp>
 
 #define LSFML_MODULE(name) \
     static int open(lua_State* L);                                     \
@@ -12,3 +15,5 @@
     static int open(lua_State* L) // No semicolon.
 
 #define FN(...) APOLLO_TO_RAW_FUNCTION(&__VA_ARGS__)
+
+#endif // LSFML_OPEN_UTIL_HPP_INCLUDED

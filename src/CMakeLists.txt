@@ -3,15 +3,30 @@
 # See LICENSE.txt or http://opensource.org/licenses/BSD-2-Clause
 
 set (LSFML_HDRS_PUBLIC
+    "rect.hpp"
+    "resource_media.hpp"
+    "resource_shape.hpp"
+    "resource_sprite.hpp"
+    "resource_text.hpp"
     "string.hpp"
-    vector.hpp)
+    "vector.hpp")
 
 set (LSFML_HDRS
-    open_util.hpp)
+    "graphics.hpp"
+    "graphics/rect_export.hpp"
+    "open_util.hpp"
+    "sfKeyCodes.hpp"
+    "vecfn.hpp"
+    "window_new.hpp")
 
 set (LSFML_SOURCES
-    open.cpp
-    open_system.cpp)
+    "graphics/render_target.cpp"
+    "graphics/transform.cpp"
+    "open.cpp"
+    "open_audio.cpp"
+    "open_graphics.cpp"
+    "open_system.cpp"
+    "open_window.cpp")
 
 # http://stackoverflow.com/a/13104057/2128694
 macro(prepend_to_all _srcs _path)
@@ -23,6 +38,8 @@ macro(prepend_to_all _srcs _path)
 endmacro()
 
 prepend_to_all(LSFML_HDRS_PUBLIC "../include/lsfml/")
+
+source_group("Public Headers" FILES ${LSFML_HDRS_PUBLIC})
 
 set(COMP_DEFS "SFML_STATIC")
 
@@ -59,10 +76,9 @@ else ()
 endif ()
 
 if (WIN32)
-    find_package(SFML REQUIRED system-s graphics-s window-s audio-s main)
-else ()
-    find_package(SFML REQUIRED system graphics window audio)
+    set (SFML_STATIC_LIBRARIES TRUE)
 endif ()
+find_package(SFML REQUIRED system graphics window audio)
 find_package(Lua52 REQUIRED)
 find_package(Apollo REQUIRED)
 
@@ -85,13 +101,10 @@ set_target_properties(lsfml PROPERTIES COMPILE_DEFINITIONS "${COMP_DEFS}")
 
 target_link_libraries(lsfml
     ${SFML_LIBRARIES}
+    ${SFML_DEPENDENCIES}
     ${LUA_LIBRARIES}
     ${APOLLO_LIBRARIES}
     ${Boost_LIBRARIES})
-
-if (WIN32)
-    target_link_libraries(lsfml "winmm.lib")
-endif()
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_link_libraries(lsfml dl)
