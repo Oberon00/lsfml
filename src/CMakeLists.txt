@@ -41,7 +41,7 @@ prepend_to_all(LSFML_HDRS_PUBLIC "../include/lsfml/")
 
 source_group("Public Headers" FILES ${LSFML_HDRS_PUBLIC})
 
-set(COMP_DEFS "SFML_STATIC")
+set(CMAKE_DEBUG_POSTFIX "-d")
 
 if (MSVC)
     add_definitions(
@@ -75,9 +75,6 @@ else ()
     endif ()
 endif ()
 
-if (WIN32)
-    set (SFML_STATIC_LIBRARIES TRUE)
-endif ()
 find_package(SFML REQUIRED system graphics window audio)
 find_package(Lua52 REQUIRED)
 find_package(Apollo REQUIRED)
@@ -111,3 +108,5 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 install(TARGETS lsfml RUNTIME DESTINATION bin)
+install(FILES ${LSFML_HDRS_PUBLIC}
+    DESTINATION include/lsfml)
