@@ -292,6 +292,8 @@ LSFML_MODULE(lsfml_graphics)
         lua_rawset(L, mod_table);
     };
 
+    apollo::stack_reference members;
+
     // Color //
     lua_pushliteral(L, "Color");
     apollo::register_class<sf::Color>(L);
@@ -321,8 +323,9 @@ LSFML_MODULE(lsfml_graphics)
         ("TRANSPARENT", sf::Color::Transparent);
 #undef OP
 #undef PROP
+    members.reset(L, -1);
     apollo::push_class_metatable<sf::Color>(L);
-    apollo::rawset_table(L, -1)("__index", apollo::stack_reference(L, -1));
+    apollo::rawset_table(L, -1)("__index", members);
     lua_pop(L, 1);
     set_module();
 
@@ -344,8 +347,8 @@ LSFML_MODULE(lsfml_graphics)
         ("inverse_transform", FN(sf::Transformable::getInverseTransform))
         ("scale", TFN(scale));
 #undef TFN
-    apollo::export_class<sf::Transformable>(L)
-        ("__index", apollo::stack_reference(L, -1));
+    members.reset(L, -1);
+    apollo::export_class<sf::Transformable>(L)("__index", members);
     lua_pushliteral(L, "Transformable");
     lua_pushvalue(L, -2);
     set_module();
@@ -371,8 +374,8 @@ LSFML_MODULE(lsfml_graphics)
         ("transform", FN(sf::View::getTransform))
         ("inverse_transform", FN(sf::View::getInverseTransform));
 #undef VFN
-    apollo::export_class<sf::View>(L)
-        ("__index", apollo::stack_reference(L, -1));
+    members.reset(L, -1);
+    apollo::export_class<sf::View>(L)("__index", members);
     set_module();
 
     // Image //
@@ -389,8 +392,8 @@ LSFML_MODULE(lsfml_graphics)
         ("pixel", FN(image_pixel))
         ("flip_horizontally", FN(sf::Image::flipHorizontally))
         ("flip_vertically", FN(sf::Image::flipVertically));
-    apollo::export_class<sf::Image>(L)
-        ("__index", apollo::stack_reference(L, -1));
+    members.reset(L, -1);
+    apollo::export_class<sf::Image>(L)("__index", members);
     set_module();
 
     // Texture //
@@ -410,8 +413,8 @@ LSFML_MODULE(lsfml_graphics)
         ("flip_horizontally", FN(sf::Image::flipHorizontally))
         ("flip_vertically", FN(sf::Image::flipVertically))
         ("maximum_size", FN(sf::Texture::getMaximumSize));
-    apollo::export_class<sf::Texture>(L)
-        ("__index", apollo::stack_reference(L, -1));
+    members.reset(L, -1);
+    apollo::export_class<sf::Texture>(L)("__index", members);
     set_module();
 
     // Font //
@@ -426,8 +429,8 @@ LSFML_MODULE(lsfml_graphics)
         ("underline_position", FN(sf::Font::getUnderlinePosition))
         ("underline_thickness", FN(sf::Font::getUnderlineThickness));
         // Missing: getTexture
-    apollo::export_class<sf::Font>(L)
-        ("__index", apollo::stack_reference(L, -1));
+    members.reset(L, -1);
+    apollo::export_class<sf::Font>(L)("__index", members);
     set_module();
 
     // Glyph //
@@ -437,8 +440,8 @@ LSFML_MODULE(lsfml_graphics)
         ("bounds", FN(APOLLO_MEMBER_GETTER(sf::Glyph::bounds)))
         ("textureRect", FN(APOLLO_MEMBER_GETTER(sf::Glyph::textureRect)));
         // Missing: getTexture
-    apollo::export_class<sf::Glyph>(L)
-        ("__index", apollo::stack_reference(L, -1));
+    members.reset(L, -1);
+    apollo::export_class<sf::Glyph>(L)("__index", members);
     set_module();
 
     // Drawable //
@@ -455,8 +458,9 @@ LSFML_MODULE(lsfml_graphics)
     add_bounds_members<lsfml::resource_sprite>(L, -1);
     add_texture_members<lsfml::resource_sprite>(L, -1);
     apollo::register_class<sf::Sprite, sf::Drawable, sf::Transformable>(L);
+    members.reset(L, -1);
     apollo::export_class<lsfml::resource_sprite, sf::Sprite>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     set_module();
 
     // Shape //
@@ -472,8 +476,9 @@ LSFML_MODULE(lsfml_graphics)
         ("point_count", FN(sf::Shape::getPointCount))
         ("point", FN(shape_point));
     add_bounds_members<sf::Shape>(L, -1);
+    members.reset(L, -1);
     apollo::export_class<sf::Shape, sf::Drawable, sf::Transformable>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     lua_pushliteral(L, "Shape");
     lua_pushvalue(L, -2);
     set_module();
@@ -490,8 +495,9 @@ LSFML_MODULE(lsfml_graphics)
         ("size", FN(lsfml::resource_rectangle::getSize));
     add_texture_members<lsfml::resource_rectangle>(L, -1);
     apollo::register_class<sf::RectangleShape, sf::Shape>(L);
+    members.reset(L, -1);
     apollo::export_class<lsfml::resource_rectangle, sf::RectangleShape>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     set_module();
 
     // CircleShape //
@@ -504,9 +510,10 @@ LSFML_MODULE(lsfml_graphics)
         ("radius", FN(lsfml::resource_circle::getRadius))
         ("set_point_count", FN(lsfml::resource_circle::setPointCount));
     add_texture_members<lsfml::resource_circle>(L, -1);
+    members.reset(L, -1);
     apollo::register_class<sf::CircleShape, sf::Shape>(L);
     apollo::export_class<lsfml::resource_circle, sf::CircleShape>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     set_module();
 
     // ConvexShape //
@@ -517,9 +524,10 @@ LSFML_MODULE(lsfml_graphics)
         ("new", apollo::raw_function::caught<&convex_new>())
         ("set_point", FN(convex_set_point));
     add_texture_members<lsfml::resource_convex>(L, -1);
+    members.reset(L, -1);
     apollo::register_class<sf::ConvexShape, sf::Shape>(L);
     apollo::export_class<lsfml::resource_convex, sf::ConvexShape>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     set_module();
 
     // RenderTarget //
@@ -552,27 +560,29 @@ LSFML_MODULE(lsfml_graphics)
         ("UNDERLINED", sf::Text::Underlined)
         ("STRIKE_THROUGH", sf::Text::StrikeThrough);
     add_bounds_members<lsfml::resource_text>(L, -1);
+    members.reset(L, -1);
     apollo::register_class<sf::Text, sf::Drawable, sf::Transformable>(L);
     apollo::export_class<lsfml::resource_text, sf::Text>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     set_module();
 
     // RenderWindow //
     lua_pushliteral(L, "RenderWindow");
     lua_newtable(L);
-    apollo::extend_table(L, -1, render_target_members);
+    members.reset(L, -1);
+    apollo::extend_table(L, members.get(), render_target_members);
     // TODO: Ensure Window is registered.
     apollo::push_class_metatable<sf::Window>(L);
     lua_pushliteral(L, "__index");
     lua_rawget(L, -2);
     BOOST_ASSERT(lua_type(L, -1) == LUA_TTABLE);
-    apollo::extend_table(L, -3, -1);
+    apollo::extend_table(L, members.get(), -1);
     lua_pop(L, 2); // Pop Window metatable and __index table.
-    apollo::rawset_table(L, -1)
+    apollo::rawset_table(L, members.get())
         ("new", apollo::raw_function::caught<&window_new<sf::RenderWindow>>())
         ("capture", FN(sf::RenderWindow::capture));
     apollo::export_class<sf::RenderWindow, sf::RenderTarget, sf::Window>(L)
-        ("__index", apollo::stack_reference(L, -1));
+        ("__index", members);
     set_module();
 
     lua_pushliteral(L, "Rect");
