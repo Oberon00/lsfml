@@ -20,12 +20,15 @@ The following libraries are needed:
   <http://github.com/LaurentGomila/SFML>.
 - **[Boost][]** in version 1.56 (later versions may/should also work).
 - **[Lua][]** >= 5.1
-- **[Apollo][]**: <https://github.com/Oberon00/apollo>
+- **[apollo][]** in the newest github revision (probably (yes, this is very
+  alpha)).
 - A reasonably C++11 compliant compiler, for MSVC, at least version 12 (2013) is
   needed.
 
 The build system used is **[CMake][]** in a recent 3.0.x version, but 2.8.x
 should also work.
+
+[Apollo]: https://github.com/Oberon00/apollo
 
 
 ### Setup ###
