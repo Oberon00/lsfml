@@ -3,12 +3,6 @@ local win = require 'lsfml.window'
 local gfx = require 'lsfml.graphics'
 local sfx = require 'lsfml.audio'
 
-local function errmsg(idx)
-    error(debug.traceback("Attempt to access _G[" .. tostring(idx) .. "]"))
-end
-
-setmetatable(_G, {__newindex = errmsg, __index = errmsg})
-
 math.randomseed(os.time())
 
 -- Define some constants
@@ -59,13 +53,12 @@ pause_msg:set_font(font)
 pause_msg:set_character_size(40)
 pause_msg:set_position(170, 150)
 pause_msg:set_color(gfx.Color.WHITE)
-pause_msg:set_string("Welcome to SFML pong!\nPress space to start the game")
+pause_msg:set_string("Welcome to LSFML pong!\nPress space to start the game")
 
 
 -- Define the paddle's properties
 local ai_timer = sys.Clock.new()
 local AI_TIME = sys.seconds(0.1)
-print("AI_TIME", AI_TIME)
 local PADDLE_SPEED = 400
 local r_paddle_speed = 0
 local BALL_SPEED = 400
@@ -219,5 +212,3 @@ while wnd:is_open() do
     -- Display things on screen
     wnd:display()
 end
-
-setmetatable(_G, nil)
