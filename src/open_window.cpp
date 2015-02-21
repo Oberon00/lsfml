@@ -1,3 +1,7 @@
+// Part of the LSFML library -- Copyright (c) Christian Neumüller 2015
+// This file is subject to the terms of the BSD 2-Clause License.
+// See LICENSE.txt or http://opensource.org/licenses/BSD-2-Clause
+
 #include "open_util.hpp"
 
 #include "window_new.hpp"
@@ -107,7 +111,7 @@ int index_event(lua_State* L)
             else
                 lua_pushnil(L);
         break;
-        
+
         case sf::Event::KeyPressed:  // key
         case sf::Event::KeyReleased: //
             if (std::strcmp(prop, "code") == 0)
@@ -285,7 +289,7 @@ LSFML_MODULE(lsfml_window)
 
 #define OP(n) \
     ("__" #n, FN(apollo::op::##n<sf::VideoMode const&, sf::VideoMode const&>))
-    
+
     apollo::export_class<sf::VideoMode>(L)
         ("__index", video_mode_members)
         ("__tostring", FN(video_mode_to_str))
@@ -312,7 +316,7 @@ LSFML_MODULE(lsfml_window)
     apollo::export_class<sf::ContextSettings>(L)
         ("__index", context_settings_members);
 
-    
+
     #define PROP(ln, cn) \
         (ln, FN(APOLLO_MEMBER_GETTER(sf::Joystick::Identification::cn)))
 
@@ -390,7 +394,7 @@ LSFML_MODULE(lsfml_window)
     apollo::export_class<sf::Window>(L)
         ("__index", window_members);
 
-    
+
     apollo::new_table(L) // Context
         ("new", apollo::get_raw_emplace_ctor_wrapper<sf::Context>())
         ("set_active", FN(sf::Context::setActive));

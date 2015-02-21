@@ -1,3 +1,7 @@
+// Part of the LSFML library -- Copyright (c) Christian Neumüller 2015
+// This file is subject to the terms of the BSD 2-Clause License.
+// See LICENSE.txt or http://opensource.org/licenses/BSD-2-Clause
+
 #ifndef LSFML_RECT_EXPORT_HPP_INCLUDED
 #define LSFML_RECT_EXPORT_HPP_INCLUDED
 
@@ -82,7 +86,7 @@ int rect_intersection(lua_State* L)
 
 template <typename T>
 int rect_intersects(lua_State* L)
-{ 
+{
     return apollo::push(L, APOLLO_TO_ARG(L, 1, sf::Rect<T>).intersects(
         APOLLO_TO_ARG(L, 2, sf::Rect<T>)));
 }

@@ -1,3 +1,7 @@
+// Part of the LSFML library -- Copyright (c) Christian Neumüller 2015
+// This file is subject to the terms of the BSD 2-Clause License.
+// See LICENSE.txt or http://opensource.org/licenses/BSD-2-Clause
+
 #ifndef LSFML_VECTOR_HPP_INCLUDED
 #define LSFML_VECTOR_HPP_INCLUDED
 
@@ -22,7 +26,7 @@ struct convert_cref_by_val<lsfml::vector2l>: std::false_type {};
 
 template<typename T>
 struct converter<sf::Vector2<T>,
-    typename std::enable_if<!std::is_same<T, lua_Number>::value>::type  
+    typename std::enable_if<!std::is_same<T, lua_Number>::value>::type
 >: converter_base<sf::Vector2<T>> {
 
     using type = sf::Vector2<T>;
@@ -54,7 +58,7 @@ struct convert_cref_by_val<lsfml::vector3l>: std::false_type {};
 
 template<typename T>
 struct converter<sf::Vector3<T>,
-    typename std::enable_if<!std::is_same<T, lua_Number>::value>::type  
+    typename std::enable_if<!std::is_same<T, lua_Number>::value>::type
 >: converter_base<sf::Vector3<T>> {
 
     using type = sf::Vector3<T>;

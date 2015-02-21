@@ -1,3 +1,7 @@
+// Part of the LSFML library -- Copyright (c) Christian Neumüller 2015
+// This file is subject to the terms of the BSD 2-Clause License.
+// See LICENSE.txt or http://opensource.org/licenses/BSD-2-Clause
+
 #ifndef LSFML_RECT_HPP_INCLUDED
 #define LSFML_RECT_HPP_INCLUDED
 
@@ -20,7 +24,7 @@ struct convert_cref_by_val<lsfml::lrect>: std::false_type {};
 
 template<typename T>
 struct converter<sf::Rect<T>,
-    typename std::enable_if<!std::is_same<T, lua_Number>::value>::type  
+    typename std::enable_if<!std::is_same<T, lua_Number>::value>::type
 >: converter_base<sf::Rect<T>> {
 
     using type = sf::Rect<T>;
